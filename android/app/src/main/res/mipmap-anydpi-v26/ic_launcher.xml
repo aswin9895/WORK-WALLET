@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Work & Wallet launcher icon (adaptive, Android 8+), made from the owner's
+     assets/branding/Icon.png: foreground = the icon (corners filled to a full
+     square) in the middle; background = the same picture stretched to the
+     edges, so any shape the phone uses (circle, rounded square…) has matching
+     colours at its edges. Older phones use ic_launcher(_round).png. -->
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@mipmap/ic_launcher_background" />
+    <foreground android:drawable="@mipmap/ic_launcher_foreground" />
+</adaptive-icon>

@@ -1,0 +1,231 @@
+// Catering detail screen (redesign v1, owner's mockup). Prefix `cat-`.
+// Shared pieces (segmented tabs, header action, bottom bar) are in _kit.scss.
+@use 'tokens' as *;
+
+.cat-list {
+  padding: 16px 16px 24px 16px;
+}
+
+.cat-bulk-actions {
+  flex: 1;
+  gap: 10px;
+}
+.cat-bulk-row {
+  flex-direction: row;
+  gap: 12px;
+}
+
+// ---- summary card ----
+.cat-summary {
+  padding: 14px;
+  margin-bottom: 14px;
+  border-radius: 18px;
+  background-color: $surface;
+  border-width: 1px;
+  border-color: $border;
+  rn-box-shadow: $row-glow;
+}
+.cat-summary-top {
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.cat-summary-text {
+  margin-left: 12px;
+}
+.cat-summary-label {
+  font-family: $font-regular;
+  font-size: 15px;
+  color: $muted;
+}
+.cat-summary-amount {
+  font-family: $font-bold;
+  font-size: 30px;
+  line-height: 38px;
+  color: $hero-amount;
+}
+.cat-summary-rows {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top-width: 1px;
+  border-top-color: $divider;
+}
+.cat-sum-row {
+  flex-direction: row;
+  align-items: center;
+  padding: 6px 2px 6px 2px;
+}
+.cat-sum-label {
+  flex: 1;
+  font-family: $font-medium;
+  font-size: 15px;
+  color: $text;
+  margin-left: 10px;
+}
+.cat-sum-value {
+  font-family: $font-bold;
+  font-size: 16px;
+  text-align: right;
+}
+// work-card status strip backgrounds (still used by WorkCard)
+.cat-bar-ok {
+  background-color: $success-soft;
+}
+.cat-bar-warn {
+  background-color: $pill-bg;
+}
+.cat-text-ok {
+  color: $success;
+}
+.cat-text-warn {
+  color: $pill-text;
+}
+
+// ---- select row ----
+.cat-select-row {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.cat-select-hint {
+  font-family: $font-regular;
+  font-size: 14px;
+  color: $muted;
+}
+.cat-select-action {
+  font-family: $font-semibold;
+  font-size: 15px;
+  color: $primary;
+}
+.cat-select-all {
+  flex-direction: row;
+  align-items: center;
+}
+.cat-select-all-text {
+  font-family: $font-medium;
+  font-size: 14px;
+  color: $text;
+}
+
+// ---- work card ----
+.cat-work {
+  padding: 12px 12px 8px 12px;
+  margin-bottom: 10px;
+  border-radius: 18px;
+  background-color: $surface;
+  border-width: 1px;
+  border-color: $border;
+  rn-box-shadow: $row-glow;
+}
+.cat-work-pressed {
+  background-color: $surface-alt;
+}
+.cat-work-selected {
+  border-color: $primary;
+  background-color: $selected-bg;
+}
+.cat-work-top {
+  flex-direction: row;
+  align-items: center;
+}
+.cat-work-head {
+  flex: 1;
+  margin-left: 12px;
+}
+.cat-work-date {
+  font-family: $font-bold;
+  font-size: 17px;
+  color: $text;
+}
+.cat-work-place {
+  font-family: $font-regular;
+  font-size: 15px;
+  color: $text;
+}
+.cat-session {
+  align-self: flex-start;
+  background-color: $pill-bg;
+  border-radius: 8px;
+  padding: 2px 9px 2px 9px;
+}
+.cat-session-text {
+  font-family: $font-semibold;
+  font-size: 13px;
+  color: $pill-text;
+}
+.cat-work-mid {
+  flex-direction: row;
+  align-items: center;
+  margin-top: 8px;
+}
+.cat-work-lines {
+  flex: 1;
+}
+.cat-work-line {
+  flex-direction: row;
+  align-items: center;
+  margin-top: 3px;
+}
+.cat-work-line-text {
+  flex: 1;
+  font-family: $font-regular;
+  font-size: 14px;
+  color: $muted;
+  margin-left: 8px;
+}
+.cat-work-divider {
+  width: 1px;
+  align-self: stretch;
+  background-color: $divider;
+  margin: 0px 12px 0px 10px;
+}
+.cat-work-amount {
+  font-family: $font-bold;
+  font-size: 18px;
+  color: $text;
+}
+.cat-strip {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 12px;
+  padding: 7px 12px 7px 12px;
+  margin-top: 10px;
+}
+.cat-strip-text {
+  font-family: $font-semibold;
+  font-size: 15px;
+}
+.cat-check {
+  margin-right: 10px;
+}
+
+// ---- people tab ----
+.cat-paid-pill {
+  background-color: $success-soft;
+  border-radius: 14px;
+  padding: 4px 12px 4px 12px;
+  margin-left: 8px;
+}
+.cat-paid-pill-text {
+  font-family: $font-bold;
+  font-size: 14px;
+  color: $success;
+}
+
+.cat-empty {
+  font-family: $font-regular;
+  font-size: 15px;
+  color: $muted;
+  text-align: center;
+  padding: 30px 0px 30px 0px;
+}
+
+// ---- palette ----
+.pal-ok {
+  color: $success;
+}
+.pal-warn {
+  color: $pill-text;
+}

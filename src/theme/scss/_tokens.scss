@@ -1,0 +1,222 @@
+// Design tokens: the ONLY place colours, fonts and sizes are defined.
+//
+// Every token is `!default`, so a theme file can override any of them:
+//   @use '../scss/styles' with ($primary: #2563eb, $bg: #0b0b0c);
+// Values here = the "default" theme, LIGHT mode (themes/default-light.scss).
+// Dark values: themes/default-dark.scss. See src/theme/README.md.
+// After editing SCSS run `npm run start:reset`.
+
+// ---- fonts (files in assets/fonts, linked into android/app/src/main/assets/fonts)
+$font-regular: Poppins-Regular !default;
+$font-medium: Poppins-Medium !default;
+$font-semibold: Poppins-SemiBold !default;
+$font-bold: Poppins-Bold !default;
+
+// ---- surfaces ----
+$bg: #fdf7f1 !default;
+$surface: #ffffff !default;
+$surface-alt: #fbf4ee !default;
+$selected-bg: #fff1e4 !default;
+$backdrop: rgba(0, 0, 0, 0.45) !default;
+$shadow: #c2410c !default; // card shadow tint (light mode only shows)
+
+// ---- brand ----
+$primary: #ea580c !default;
+$primary-dark: #c2410c !default; // text on soft backgrounds
+$primary-soft: #fde4cf !default;
+$on-primary: #ffffff !default; // text/icons on $primary
+
+// ---- text ----
+$text: #1c1917 !default;
+$muted: #6b6560 !default;
+$placeholder: #a8a29e !default;
+
+// ---- lines ----
+$border: #efe5db !default;
+$divider: #ece2d8 !default;
+
+// ---- status ----
+$danger: #b91c1c !default;
+$danger-soft: #fee2e2 !default;
+$success: #16a34a !default;
+$success-soft: #d5f3e3 !default;
+$accent: #5b46d8 !default; // purple (e.g. "no work yet")
+$accent-soft: #e6e1fb !default;
+
+// ---- navigation header (other screens) / status bar ----
+$header-bg: #e8590c !default;
+$header-text: #ffffff !default;
+
+// ---- home: app bar ----
+$appbar-from: #d9480f !default; // gradient start (left)
+$appbar-to: #f08c3a !default; // gradient end (right)
+$appbar-text: #ffffff !default;
+$appbar-wave: #f9a868 !default; // curved edge under the app bar
+$appbar-pill-border: rgba(255, 255, 255, 0.55) !default;
+$appbar-pill-bg: rgba(255, 255, 255, 0.12) !default;
+$appbar-icon-bg: #ffffff !default; // briefcase colour
+
+// ---- home: summary ("hero") card ----
+$hero-from: #fff3e8 !default;
+$hero-to: #fde3cc !default;
+$hero-border: #fbe3cf !default;
+$hero-label: #57534e !default;
+$hero-amount: #d9480f !default;
+$hero-icon-bg: #fde8b4 !default;
+$hero-icon: #ea580c !default;
+$hero-illustration: #f7b27e !default; // cloche drawing
+$hero-illustration-shine: #fde3cc !default;
+$hero-hill: #f9cfaa !default; // soft mound under the cloche
+
+// ---- glows / shadows (React Native boxShadow, used via `rn-box-shadow`) ----
+$hero-glow: 0px 8px 22px 0px rgba(194, 65, 12, 0.14) !default;
+$card-glow: 0px 4px 14px 0px rgba(120, 53, 15, 0.08) !default;
+$cta-glow: 0px 8px 18px 0px rgba(194, 65, 12, 0.35) !default;
+
+// ---- home: pills ("To collect ₹…") ----
+$pill-bg: #fde0ca !default;
+$pill-text: #c2410c !default;
+
+// ---- home: catering status avatars ----
+$status-ok-bg: $success-soft !default;
+$status-ok: $success !default;
+$status-pending-bg: $primary-soft !default;
+$status-pending: $primary !default;
+$status-empty-bg: $accent-soft !default;
+$status-empty: $accent !default;
+
+// ---- home: empty hint + bottom wave + main button ----
+$hint-illustration: #d6d3d1 !default;
+$hint-text: #57534e !default;
+$bottom-wave: #fbd3b2 !default;
+$cta-from: #f97316 !default;
+$cta-to: #c2410c !default;
+
+// ---- kit: gradient screen header (Settings, later other screens) ----
+$subheader-from: #d9480f !default;
+$subheader-to: #f0731f !default;
+$subheader-swoosh: #f9a35a !default; // lighter wave at the top-right
+$subheader-carve: $bg !default; // curved cut at the bottom-right (transparent = none)
+$subheader-radius: 0px !default; // bottom corners
+$subheader-border: transparent !default; // bottom line
+$subheader-border-width: 0px !default;
+$subheader-text: #ffffff !default;
+
+// ---- kit: section titles, rows, icon tiles, choice pills ----
+$section-title: #57534e !default;
+$tile-bg: $primary-soft !default;
+$tile-icon: $primary !default;
+$tile-radius: 16px !default; // square-ish tile (People)
+$tile-round-radius: 26px !default; // round tile (Your data)
+$row-divider: $divider !default; // line after a row's tile
+$row-glow: 0px 4px 16px 0px rgba(120, 53, 15, 0.08) !default;
+$choice-bg: $surface !default;
+$choice-border: #e7ddd3 !default;
+$choice-text: $text !default;
+$choice-on-from: #f97316 !default;
+$choice-on-to: #e2560c !default;
+$choice-on-glow: 0px 6px 14px 0px rgba(234, 88, 12, 0.35) !default;
+
+// ---- kit: form sheet (floating card), fields, buttons ----
+$sheet-bg: #fffbf8 !default;
+$sheet-border: transparent !default;
+$sheet-handle: #d6d3d1 !default;
+$sheet-backdrop: rgba(41, 37, 36, 0.45) !default;
+$field-bg: #ffffff !default;
+$field-border: #e3d9cf !default;
+$field-text: $text !default;
+$field-icon: #57534e !default;
+$field-label: $text !default;
+$soft-btn-bg: #fde4cf !default;
+$soft-btn-border: transparent !default;
+$soft-btn-text: #c2410c !default;
+$intro-subtitle: $muted !default;
+// more button looks (dialogs): outline (Cancel), tonal (Save), danger
+$outline-btn-border: #e3d9cf !default;
+$outline-btn-text: #57534e !default;
+$tonal-btn-bg: #fde4cf !default;
+$tonal-btn-text: #c2410c !default;
+$danger-btn-bg: #dc2626 !default;
+$on-danger: #ffffff !default;
+
+// ---- kit: dialog (new alert look: hero icon / header tile, option cards) ----
+$dialog-bg: $sheet-bg !default;
+$dialog-border: #f1e7de !default;
+$dialog-backdrop: $sheet-backdrop !default;
+$dialog-close-bg: #f3ece6 !default;
+$dialog-close-icon: #57534e !default;
+$dialog-blob: #fde4cf !default;
+$dialog-hero-from: #fb923c !default;
+$dialog-hero-to: #ea580c !default;
+$dialog-blob-danger: #fee2e2 !default;
+$dialog-hero-danger: #dc2626 !default;
+$dialog-blob-success: #d5f3e3 !default;
+$dialog-hero-success: #16a34a !default;
+$dialog-title: $text !default;
+$dialog-message: $muted !default;
+$dialog-option-bg: #ffffff !default;
+$dialog-option-border: #ece3da !default;
+$dialog-option-on-bg: #fff4ea !default;
+$dialog-option-on-border: #f97316 !default;
+$dialog-radio: #c9bfb5 !default;
+$dialog-radio-on: #f97316 !default;
+$dialog-tile-red-bg: #fde2e2 !default;
+$dialog-tile-red-icon: #dc2626 !default;
+$dialog-tile-blue-bg: #e3e8f7 !default;
+$dialog-tile-blue-icon: #4d64b3 !default;
+
+// ---- kit: segmented tabs ----
+$seg-track: #efe6dd !default;
+$seg-active: #ffffff !default;
+$seg-active-glow: 0px 2px 8px 0px rgba(120, 53, 15, 0.12) !default;
+$seg-text: $muted !default;
+$seg-text-on: $text !default;
+$bottom-bar-bg: $bg !default;
+$bottom-bar-border: $border !default;
+
+// ---- bottom tabs (Work | Money) ----
+$tabbar-bg: $surface !default;
+$tabbar-border: $border !default;
+$tabbar-text: $muted !default;
+$tabbar-on: $primary !default;
+$tabbar-radius: 26px !default; // rounded top corners
+
+// ---- money ----
+$money-plus: $success !default; // money in / positive remaining
+$money-minus: $danger !default; // negative remaining, missing
+
+// ---- report export (PDF + image) — always rendered with LIGHT values ----
+$export-page: #ffffff !default;
+$export-text: #1c1917 !default;
+$export-muted: #6b6560 !default;
+$export-accent: #ea580c !default;
+$export-accent-dark: #c2410c !default;
+$export-head-bg: #fde4cf !default;
+$export-zebra: #fdf7f1 !default;
+$export-border: #ece2d8 !default;
+$export-total-bg: #fff1e4 !default;
+// report header band (dark like the app icon, so the white logo reads)
+$export-banner-bg: #15121f !default;
+$export-banner-text: #ffffff !default;
+$export-banner-muted: #d6d3d1 !default;
+$export-banner-accent: #fb923c !default;
+
+// ---- payment report sheet ----
+$report-bg: #111111 !default;
+$report-text: #ffffff !default;
+$report-muted: #a8a29e !default;
+$report-border: #2a2a2a !default;
+
+// ---- sizes ----
+$radius: 12px !default;
+$radius-lg: 22px !default;
+$radius-sm: 8px !default;
+$gap: 12px !default;
+
+@mixin card {
+  background-color: $surface;
+  border-radius: $radius;
+  border-width: 1px;
+  border-color: $border;
+  padding: 14px;
+}

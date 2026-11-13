@@ -1,0 +1,249 @@
+// Payment report table
+@use 'tokens' as *;
+
+.report-table-scroll {
+  margin-top: 12px;
+}
+.report-table-head {
+  flex-direction: row;
+  background-color: $surface-alt;
+}
+.report-table-row {
+  flex-direction: row;
+  align-items: stretch;
+  border-bottom-width: 1px;
+  border-bottom-color: $divider;
+}
+.report-table-cell {
+  padding: 12px 10px;
+  font-family: $font-regular;
+  font-size: 13px;
+  color: $text;
+  border-right-width: 1px;
+  border-right-color: $divider;
+}
+.report-table-head-text {
+  font-family: $font-semibold;
+}
+.report-table-name {
+  width: 170px;
+}
+.report-table-qty {
+  width: 60px;
+}
+.report-table-wide {
+  width: 240px;
+}
+.report-table-date {
+  width: 115px;
+}
+.report-table-money {
+  width: 125px;
+  text-align: right;
+}
+
+// Configurable report screen.
+.report-content {
+  padding: 16px 16px 40px 16px;
+}
+.report-title {
+  font-family: $font-bold;
+  font-size: 24px;
+  color: $text;
+}
+.report-caption {
+  font-family: $font-regular;
+  font-size: 13px;
+  color: $muted;
+  margin-top: 4px;
+}
+.report-panel {
+  background-color: $surface;
+  border-radius: 18px;
+  border-width: 1px;
+  border-color: $border;
+  padding: 16px;
+  margin-top: 16px;
+}
+.report-section-title {
+  font-family: $font-bold;
+  font-size: 18px;
+  color: $text;
+}
+.report-section-label {
+  font-family: $font-semibold;
+  font-size: 14px;
+  color: $muted;
+  margin-top: 16px;
+}
+.report-entry {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  border-bottom-width: 1px;
+  border-bottom-color: $divider;
+}
+.report-entry-top {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 12px;
+}
+.report-entry-name {
+  flex: 1;
+  font-family: $font-semibold;
+  font-size: 15px;
+  color: $text;
+}
+.report-entry-amount {
+  flex-shrink: 1;
+  font-family: $font-semibold;
+  font-size: 15px;
+  color: $text;
+  text-align: right;
+}
+.report-entry-meta {
+  font-family: $font-regular;
+  font-size: 13px;
+  color: $muted;
+  margin-top: 4px;
+}
+.report-total-row {
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+}
+.report-total-label {
+  flex: 1;
+  font-family: $font-bold;
+  font-size: 16px;
+  color: $text;
+}
+.report-total-amount {
+  flex-shrink: 1;
+  font-family: $font-bold;
+  font-size: 18px;
+  color: $primary;
+  text-align: right;
+}
+.report-empty {
+  font-family: $font-regular;
+  font-size: 15px;
+  color: $muted;
+  padding-top: 32px;
+  text-align: center;
+}
+.report-busy {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  align-items: center;
+  justify-content: center;
+  background-color: $backdrop;
+}
+.report-busy-card {
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 22px 16px 22px;
+  border-radius: 16px;
+  background-color: $surface;
+}
+.report-busy-text {
+  font-family: $font-medium;
+  font-size: 15px;
+  color: $text;
+}
+.report-date-fields {
+  flex-direction: row;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.report-option-row {
+  flex-direction: row;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.report-option-label {
+  flex: 1;
+  font-family: $font-medium;
+  font-size: 14px;
+  color: $text;
+  margin-left: 12px;
+}
+
+.report-sheet {
+  background-color: $report-bg;
+  border-radius: $radius;
+  padding: 18px 14px;
+}
+.report-heading {
+  font-size: 22px;
+  font-weight: 800;
+  color: $report-text;
+}
+.report-sub {
+  font-size: 13px;
+  color: $report-muted;
+  margin-top: 2px;
+  margin-bottom: 14px;
+}
+.report-tr {
+  flex-direction: row;
+  align-items: center;
+  padding-top: 11px;
+  padding-bottom: 11px;
+  border-bottom-width: 1px;
+  border-bottom-color: $report-border;
+}
+.report-th {
+  font-size: 13px;
+  font-weight: 800;
+  color: $report-text;
+}
+.report-td {
+  font-size: 14px;
+  color: $report-text;
+}
+.report-col-cat {
+  flex: 2.2;
+  padding-right: 6px;
+}
+.report-col-qty {
+  flex: 0.9;
+  text-align: right;
+}
+.report-col-rate {
+  flex: 1.8;
+  text-align: right;
+}
+.report-col-total {
+  flex: 1.5;
+  text-align: right;
+}
+.report-sep {
+  font-size: 12px;
+  font-weight: 700;
+  color: $report-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding-top: 14px;
+  padding-bottom: 4px;
+}
+.report-subtotal {
+  font-size: 13px;
+  color: $report-muted;
+}
+.report-grand-row {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 14px;
+}
+.report-grand {
+  font-size: 18px;
+  font-weight: 800;
+  color: $report-text;
+}

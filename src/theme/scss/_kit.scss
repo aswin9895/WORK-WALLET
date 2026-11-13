@@ -1,0 +1,922 @@
+// Shared redesign "kit" (from the owner's Settings mockups): gradient screen
+// header, section titles, icon rows, choice pills. Classes prefixed `kit-`.
+// Reuse these on every redesigned screen. Colours only via tokens.
+@use 'tokens' as *;
+
+.kit-screen {
+  flex: 1;
+  background-color: $bg;
+}
+.kit-content {
+  padding: 18px 16px 160px 16px;
+}
+.kit-content-form {
+  padding: 22px 16px 120px 16px;
+}
+.kit-content-list {
+  padding: 22px 16px 0px 16px; // list screens add their own footer
+}
+
+// ---- gradient screen header ----
+.kit-header {
+  overflow: hidden;
+  border-bottom-left-radius: $subheader-radius;
+  border-bottom-right-radius: $subheader-radius;
+  border-bottom-width: $subheader-border-width;
+  border-left-width: $subheader-border-width;
+  border-right-width: $subheader-border-width;
+  border-color: $subheader-border;
+}
+.kit-header-row {
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 16px 22px 12px;
+}
+.kit-header-back {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  align-items: center;
+  justify-content: center;
+}
+.kit-header-title {
+  flex-shrink: 1;
+  font-family: $font-bold;
+  font-size: 24px;
+  color: $subheader-text;
+  margin-left: 18px;
+}
+.kit-header-swoosh {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 60%;
+}
+.kit-header-carve {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 26px;
+}
+
+// ---- section title ----
+.kit-section {
+  font-family: $font-semibold;
+  font-size: 13px;
+  letter-spacing: 0.6px;
+  color: $section-title;
+  margin-top: 6px;
+  margin-bottom: 8px;
+}
+
+// ---- row card ----
+.kit-row {
+  flex-direction: row;
+  align-items: center;
+  padding: 9px 12px 9px 10px;
+  margin-bottom: 6px;
+  border-radius: 16px;
+  background-color: $surface;
+  border-width: 1px;
+  border-color: $border;
+  rn-box-shadow: $row-glow;
+}
+.kit-row-pressed {
+  background-color: $surface-alt;
+}
+.kit-tile {
+  width: 42px;
+  height: 42px;
+  border-radius: $tile-radius;
+  background-color: $tile-bg;
+  align-items: center;
+  justify-content: center;
+}
+.kit-tile-round {
+  border-radius: $tile-round-radius;
+}
+.kit-row-divider {
+  width: 1px;
+  align-self: stretch;
+  margin: 4px 0px 4px 12px;
+  background-color: $row-divider;
+}
+.kit-row-divider-always {
+  background-color: $divider;
+}
+.kit-row-body {
+  flex: 1;
+  margin-left: 12px;
+}
+.kit-row-title {
+  font-family: $font-bold;
+  font-size: 16px;
+  color: $text;
+}
+.kit-row-text {
+  font-family: $font-regular;
+  font-size: 13px;
+  line-height: 19px;
+  color: $muted;
+}
+.kit-row-text-strong {
+  color: $text;
+}
+
+// ---- choice pills ----
+.kit-choices {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.kit-choices-spread {
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 0px;
+}
+.kit-choice-shadow {
+  border-radius: 20px;
+}
+.kit-choice-shadow-on {
+  rn-box-shadow: $choice-on-glow;
+}
+.kit-choice {
+  flex-direction: row;
+  align-items: center;
+  height: 40px;
+  padding: 0px 16px 0px 14px;
+  border-radius: 20px;
+  border-width: 1.5px;
+  border-color: $choice-border;
+  background-color: $choice-bg;
+  overflow: hidden;
+}
+.kit-choice-compact {
+  padding: 0px 13px 0px 13px; // spread rows (4 pills must fit small phones)
+}
+.kit-choice-on {
+  border-color: transparent;
+}
+.kit-choice-text {
+  font-family: $font-medium;
+  font-size: 15px;
+  color: $choice-text;
+  margin-left: 10px;
+}
+.kit-choice-text-no-icon {
+  margin-left: 2px;
+}
+.kit-choice-text-on {
+  font-family: $font-semibold;
+  color: $on-primary;
+}
+
+// ---- bottom decoration ----
+.kit-bottom-wave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 170px;
+}
+
+// ---- intro block (icon tile + title + subtitle under the header) ----
+.kit-intro {
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.kit-intro-body {
+  flex: 1;
+  margin-left: 12px;
+}
+.kit-intro-title {
+  font-family: $font-bold;
+  font-size: 22px;
+  color: $text;
+}
+.kit-intro-subtitle {
+  font-family: $font-regular;
+  font-size: 14px;
+  color: $intro-subtitle;
+}
+
+// ---- small inline row: icon + text (e.g. phone number) ----
+.kit-inline {
+  flex-direction: row;
+  align-items: center;
+  margin-top: 2px;
+}
+.kit-inline-text {
+  font-family: $font-regular;
+  font-size: 13px;
+  color: $muted;
+  margin-left: 8px;
+}
+
+// ---- rate pill: "₹500 / fixed" ----
+.kit-rate-pill {
+  flex-direction: row;
+  align-items: baseline;
+  background-color: $pill-bg;
+  border-radius: 14px;
+  padding: 4px 10px 4px 10px;
+  margin-left: 8px;
+}
+.kit-rate-amount {
+  font-family: $font-bold;
+  font-size: 15px;
+  color: $pill-text;
+}
+.kit-rate-suffix {
+  font-family: $font-regular;
+  font-size: 12px;
+  color: $pill-text;
+}
+
+// ---- buttons ----
+.kit-btn-shadow {
+  border-radius: 14px;
+  rn-box-shadow: $cta-glow;
+}
+.kit-btn {
+  height: 46px;
+  border-radius: 14px;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+.kit-btn-soft {
+  background-color: $soft-btn-bg;
+  border-width: 1.5px;
+  border-color: $soft-btn-border;
+}
+.kit-btn-text {
+  font-family: $font-bold;
+  font-size: 16px;
+  color: $on-primary;
+}
+.kit-btn-text-soft {
+  color: $soft-btn-text;
+}
+.kit-btn-icon-gap {
+  margin-left: 8px;
+}
+.kit-btn-row {
+  flex-direction: row;
+  gap: 14px;
+  margin-top: 10px;
+}
+.kit-btn-flex {
+  flex: 1;
+}
+.kit-link-danger {
+  font-family: $font-semibold;
+  font-size: 15px;
+  color: $danger;
+  text-align: center;
+  padding: 14px 0px 2px 0px;
+}
+
+// ---- pill-shaped wide button (Add person / New Catering style) ----
+.kit-cta-shadow {
+  align-self: center; // button only as wide as its label, centred
+  border-radius: 24px;
+  rn-box-shadow: $cta-glow;
+}
+.kit-cta {
+  height: 48px;
+  min-width: 190px;
+  padding: 0px 30px 0px 30px;
+  border-radius: 24px;
+  overflow: hidden;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.kit-cta-text {
+  font-family: $font-bold;
+  font-size: 16px;
+  color: $on-primary;
+  margin-left: 8px;
+}
+.kit-cta-inline {
+  padding-top: 16px; // = BUTTON_GAP in PeopleScreen
+}
+.kit-cta-fixed {
+  position: absolute;
+  align-items: center;
+  left: 16px;
+  right: 16px;
+  bottom: 0px;
+}
+
+// ---- floating form sheet ----
+.kit-sheet-backdrop {
+  flex: 1;
+  background-color: $sheet-backdrop;
+  justify-content: flex-end;
+  padding: 0px 16px 0px 16px;
+}
+.kit-sheet {
+  background-color: $sheet-bg;
+  border-radius: 28px;
+  border-width: 1px;
+  border-color: $sheet-border;
+  padding: 8px 18px 18px 18px;
+  max-height: 92%;
+}
+.kit-sheet-handle {
+  align-self: center;
+  width: 48px;
+  height: 5px;
+  border-radius: 3px;
+  background-color: $sheet-handle;
+  margin-bottom: 14px;
+}
+.kit-sheet-head {
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+.kit-sheet-title {
+  font-family: $font-bold;
+  font-size: 20px;
+  color: $text;
+  margin-left: 12px;
+}
+
+// ---- field with leading icon ----
+.kit-field {
+  margin-bottom: 12px;
+}
+.kit-field-label {
+  font-family: $font-semibold;
+  font-size: 14px;
+  color: $field-label;
+  margin-bottom: 6px;
+}
+.kit-field-box {
+  flex-direction: row;
+  align-items: center;
+  height: 46px;
+  border-radius: 12px;
+  border-width: 1.5px;
+  border-color: $field-border;
+  background-color: $field-bg;
+  padding: 0px 14px 0px 16px;
+}
+.kit-field-box-error {
+  border-color: $danger;
+}
+.kit-field-input {
+  flex: 1;
+  font-family: $font-regular;
+  font-size: 15px;
+  color: $field-text;
+  margin-left: 12px;
+  padding: 0px;
+}
+// "tile" variant: small icon tile + divider before the input
+.kit-field-box-tile {
+  padding: 0px 14px 0px 7px;
+  height: 52px;
+}
+.kit-field-box-multiline {
+  height: auto;
+  min-height: 96px;
+  align-items: flex-start;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+.kit-field-tile {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background-color: $tile-bg;
+  align-items: center;
+  justify-content: center;
+}
+.kit-field-divider {
+  width: 1px;
+  height: 26px;
+  background-color: $divider;
+  margin-left: 10px;
+}
+.kit-field-divider-top {
+  margin-top: 5px;
+}
+.kit-field-input-multiline {
+  min-height: 80px;
+  text-align-vertical: top;
+  padding-top: 7px;
+}
+.kit-field-error {
+  font-family: $font-regular;
+  font-size: 13px;
+  color: $danger;
+  margin-top: 6px;
+}
+
+// ---- header action (e.g. "Edit" on the right) ----
+.kit-header-actions {
+  margin-left: auto;
+  flex-direction: row;
+  align-items: center;
+}
+.kit-header-action {
+  padding: 6px 4px 6px 14px;
+}
+.kit-header-action-text {
+  font-family: $font-semibold;
+  font-size: 17px;
+  color: $subheader-text;
+}
+
+// ---- segmented tabs ----
+.kit-seg {
+  flex-direction: row;
+  background-color: $seg-track;
+  border-radius: 14px;
+  padding: 4px;
+  margin-bottom: 12px;
+}
+.kit-seg-item {
+  flex: 1;
+  align-items: center;
+  border-radius: 11px;
+  padding: 8px 0px 8px 0px;
+}
+.kit-seg-item-on {
+  background-color: $seg-active;
+  rn-box-shadow: $seg-active-glow;
+}
+.kit-seg-text {
+  font-family: $font-semibold;
+  font-size: 15px;
+  color: $seg-text;
+}
+.kit-seg-text-on {
+  font-family: $font-bold;
+  color: $seg-text-on;
+}
+
+// ---- bottom action bar (two buttons) ----
+.kit-bottom-bar {
+  flex-direction: row;
+  gap: 12px;
+  padding: 10px 16px 0px 16px;
+  background-color: $bottom-bar-bg;
+  border-top-width: 1px;
+  border-top-color: $bottom-bar-border;
+}
+
+// ---- plain input box (text input, date, dropdown) ----
+.kit-input {
+  height: 46px;
+  border-radius: 12px;
+  border-width: 1.5px;
+  border-color: $field-border;
+  background-color: $field-bg;
+  padding: 0px 14px 0px 14px;
+  justify-content: center;
+}
+.kit-input-row {
+  flex-direction: row;
+  align-items: center;
+  padding-right: 8px;
+}
+.kit-input-open {
+  border-color: $primary;
+}
+.kit-input-text {
+  font-family: $font-regular;
+  font-size: 16px;
+  color: $field-text;
+}
+.kit-input-field {
+  flex: 1;
+  font-family: $font-regular;
+  font-size: 16px;
+  color: $field-text;
+  padding: 0px;
+}
+// a TextInput that IS the box (Place, extras, Notes): keeps the 14px side
+// padding (.kit-input-field is for an input placed INSIDE a box and has none)
+.kit-text-input {
+  font-family: $font-regular;
+  font-size: 16px;
+  color: $field-text;
+  padding: 0px 14px 0px 14px;
+}
+.kit-input-multiline {
+  height: auto;
+  min-height: 96px;
+  justify-content: flex-start;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align-vertical: top;
+}
+.kit-input-placeholder {
+  color: $placeholder;
+}
+.kit-list {
+  max-height: 220px;
+  margin-top: 6px;
+  border-radius: 12px;
+  border-width: 1px;
+  border-color: $border;
+  background-color: $surface;
+}
+.kit-list-item {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 14px 11px 14px;
+  border-bottom-width: 1px;
+  border-bottom-color: $divider;
+}
+.kit-list-item-on {
+  background-color: $selected-bg;
+}
+.kit-list-text {
+  font-family: $font-regular;
+  font-size: 15px;
+  color: $text;
+}
+.kit-list-sub {
+  font-family: $font-regular;
+  font-size: 12px;
+  color: $muted;
+}
+.kit-list-create {
+  font-family: $font-semibold;
+  font-size: 15px;
+  color: $primary;
+}
+
+// ---- palette for SVG / icons ----
+.pal-subheader-from {
+  color: $subheader-from;
+}
+.pal-subheader-to {
+  color: $subheader-to;
+}
+.pal-subheader-swoosh {
+  color: $subheader-swoosh;
+}
+.pal-subheader-carve {
+  color: $subheader-carve;
+}
+.pal-subheader-text {
+  color: $subheader-text;
+}
+.pal-tile-icon {
+  color: $tile-icon;
+}
+.pal-choice-text {
+  color: $choice-text;
+}
+.pal-choice-on-from {
+  color: $choice-on-from;
+}
+.pal-choice-on-to {
+  color: $choice-on-to;
+}
+.pal-soft-btn-text {
+  color: $soft-btn-text;
+}
+.pal-field-icon {
+  color: $field-icon;
+}
+.pal-placeholder {
+  color: $placeholder;
+}
+
+// BusyOverlay (dims the screen while a long action runs, e.g. backup)
+.kit-busy {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  align-items: center;
+  justify-content: center;
+  background-color: $backdrop;
+}
+.kit-busy-card {
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 22px 16px 22px;
+  border-radius: 16px;
+  background-color: $surface;
+}
+.kit-busy-text {
+  font-family: $font-medium;
+  font-size: 15px;
+  color: $text;
+}
+
+// ---- extra button looks (KitButton variant outline / tonal / danger) ----
+.kit-btn-outline {
+  background-color: transparent;
+  border-width: 1.5px;
+  border-color: $outline-btn-border;
+}
+.kit-btn-text-outline {
+  color: $outline-btn-text;
+}
+.kit-btn-tonal {
+  background-color: $tonal-btn-bg;
+}
+.kit-btn-text-tonal {
+  color: $tonal-btn-text;
+}
+.kit-btn-danger {
+  background-color: $danger-btn-bg;
+}
+.kit-btn-text-danger {
+  color: $on-danger;
+}
+.pal-outline-btn-text {
+  color: $outline-btn-text;
+}
+.pal-tonal-btn-text {
+  color: $tonal-btn-text;
+}
+.pal-on-danger {
+  color: $on-danger;
+}
+
+// ---- dialog (alerts with layout 'hero' / 'header', see KitAlertCard) ----
+.kit-dialog-backdrop {
+  flex: 1;
+  background-color: $dialog-backdrop;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 20px 24px 20px;
+}
+.kit-dialog {
+  width: 100%;
+  max-width: 440px;
+  max-height: 92%;
+  background-color: $dialog-bg;
+  border-radius: 28px;
+  border-width: 1px;
+  border-color: $dialog-border;
+  padding: 22px 20px 20px 20px;
+}
+.kit-dialog-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 38px;
+  height: 38px;
+  border-radius: 19px;
+  align-items: center;
+  justify-content: center;
+  background-color: $dialog-close-bg;
+}
+.kit-dialog-hero {
+  align-self: center;
+  width: 120px;
+  height: 92px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 6px;
+  margin-bottom: 8px;
+}
+.kit-dialog-blob {
+  position: absolute;
+  top: 0px;
+  left: 22px;
+  width: 98px;
+  height: 84px;
+  border-top-left-radius: 52px;
+  border-top-right-radius: 44px;
+  border-bottom-right-radius: 50px;
+  border-bottom-left-radius: 30px;
+  background-color: $dialog-blob;
+}
+.kit-dialog-blob-danger {
+  background-color: $dialog-blob-danger;
+}
+.kit-dialog-blob-success {
+  background-color: $dialog-blob-success;
+}
+.kit-dialog-message-scroll {
+  flex-grow: 0;
+  flex-shrink: 1;
+}
+.kit-dialog-auto-note {
+  font-family: $font-regular;
+  font-size: 12px;
+  color: $dialog-message;
+  text-align: center;
+  margin-top: 12px;
+}
+.kit-dialog-title-center {
+  font-family: $font-bold;
+  font-size: 23px;
+  color: $dialog-title;
+  text-align: center;
+}
+.kit-dialog-message-center {
+  font-family: $font-regular;
+  font-size: 15px;
+  line-height: 22px;
+  color: $dialog-message;
+  text-align: center;
+  margin-top: 8px;
+}
+.kit-dialog-head {
+  flex-direction: row;
+  align-items: center;
+  padding-right: 44px;
+  margin-bottom: 18px;
+}
+.kit-dialog-head-text {
+  flex: 1;
+  margin-left: 14px;
+}
+.kit-dialog-title {
+  font-family: $font-bold;
+  font-size: 21px;
+  color: $dialog-title;
+}
+.kit-dialog-subtitle {
+  font-family: $font-regular;
+  font-size: 14px;
+  color: $dialog-message;
+  margin-top: 2px;
+}
+.kit-dialog-section {
+  font-family: $font-medium;
+  font-size: 15px;
+  color: $dialog-title;
+  margin-bottom: 10px;
+}
+.kit-dialog-options {
+  flex-grow: 0;
+  flex-shrink: 1;
+}
+.kit-dialog-check {
+  border-radius: 7px;
+}
+.kit-dialog-message-gap {
+  margin-top: -8px;
+  margin-bottom: 16px;
+}
+.kit-no-margin {
+  margin-left: 0px;
+}
+.kit-dialog-option {
+  flex-direction: row;
+  align-items: center;
+  padding: 12px 14px 12px 12px;
+  border-radius: 18px;
+  border-width: 1.5px;
+  border-color: $dialog-option-border;
+  background-color: $dialog-option-bg;
+  margin-bottom: 10px;
+}
+.kit-dialog-option-on {
+  border-color: $dialog-option-on-border;
+  background-color: $dialog-option-on-bg;
+}
+.kit-dialog-option-tile {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  align-items: center;
+  justify-content: center;
+  background-color: $tile-bg;
+}
+.kit-dialog-option-tile-red {
+  background-color: $dialog-tile-red-bg;
+}
+.kit-dialog-option-tile-blue {
+  background-color: $dialog-tile-blue-bg;
+}
+.kit-dialog-option-body {
+  flex: 1;
+  margin-left: 12px;
+  margin-right: 8px;
+}
+.kit-dialog-option-label {
+  font-family: $font-semibold;
+  font-size: 16px;
+  color: $dialog-title;
+}
+.kit-dialog-option-text {
+  font-family: $font-regular;
+  font-size: 13px;
+  color: $dialog-message;
+  margin-top: 1px;
+}
+.kit-dialog-radio {
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  border-width: 2px;
+  border-color: $dialog-radio;
+  align-items: center;
+  justify-content: center;
+}
+.kit-dialog-radio-on {
+  border-color: $dialog-radio-on;
+}
+.kit-dialog-radio-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  background-color: $dialog-radio-on;
+}
+.kit-dialog-check-on {
+  background-color: $dialog-radio-on;
+  border-color: $dialog-radio-on;
+}
+.kit-dialog-buttons {
+  margin-top: 8px;
+  gap: 12px;
+}
+.kit-dialog-buttons-hero {
+  margin-top: 22px;
+}
+.kit-dialog-btn-row {
+  flex-direction: row;
+  gap: 12px;
+}
+.pal-dialog-close {
+  color: $dialog-close-icon;
+}
+.pal-dialog-hero-from {
+  color: $dialog-hero-from;
+}
+.pal-dialog-hero-to {
+  color: $dialog-hero-to;
+}
+.pal-dialog-hero-danger {
+  color: $dialog-hero-danger;
+}
+.pal-dialog-hero-success {
+  color: $dialog-hero-success;
+}
+.pal-dialog-tile-red {
+  color: $dialog-tile-red-icon;
+}
+.pal-dialog-tile-blue {
+  color: $dialog-tile-blue-icon;
+}
+.pal-on-dialog-radio {
+  color: $dialog-bg;
+}
+
+// ---- bottom tab bar (Work | Money) — BottomTabBar.js ----
+.kit-tabbar {
+  flex-direction: row;
+  padding-top: 8px;
+  background-color: $tabbar-bg;
+  border-top-left-radius: $tabbar-radius;
+  border-top-right-radius: $tabbar-radius;
+  border-top-width: 1px;
+  border-left-width: 1px;
+  border-right-width: 1px;
+  border-color: $tabbar-border;
+}
+.kit-tab {
+  flex: 1;
+  align-items: center;
+}
+.kit-tab-label {
+  font-family: $font-medium;
+  font-size: 13px;
+  color: $tabbar-text;
+  margin-top: 1px;
+}
+.kit-tab-label-on {
+  font-family: $font-semibold;
+  color: $tabbar-on;
+}
+// orange line under the active tab (transparent on the others, same height)
+.kit-tab-indicator {
+  width: 72px;
+  height: 3px;
+  border-radius: 2px;
+  margin-top: 5px;
+}
+.kit-tab-indicator-on {
+  background-color: $tabbar-on;
+}
+.pal-tab-on {
+  color: $tabbar-on;
+}
+.pal-tab-off {
+  color: $tabbar-text;
+}

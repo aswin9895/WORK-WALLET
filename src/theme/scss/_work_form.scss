@@ -1,0 +1,214 @@
+// New / Edit Work (redesign v1, owner's second mockup). Prefix `wf-`.
+@use 'tokens' as *;
+
+.wf-content {
+  padding: 16px 16px 110px 16px;
+}
+.wf-card {
+  padding: 4px 12px 4px 12px;
+  border-radius: 18px;
+  background-color: $surface;
+  border-width: 1px;
+  border-color: $border;
+  rn-box-shadow: $row-glow;
+}
+.wf-row {
+  flex-direction: row;
+  align-items: center;
+  padding: 9px 0px 9px 0px;
+}
+.wf-row-divider {
+  height: 1px;
+  background-color: $divider;
+}
+.wf-row-label {
+  width: 78px;
+  margin-left: 12px;
+  font-family: $font-medium;
+  font-size: 15px;
+  color: $text;
+}
+.wf-row-field {
+  flex: 1;
+}
+
+// section header: icon + "PEOPLE (2)" + "+ Add person"
+.wf-section-head {
+  flex-direction: row;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.wf-section-title {
+  flex: 1;
+  font-family: $font-bold;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  color: $text;
+  margin-left: 10px;
+}
+.wf-add-btn {
+  background-color: $pill-bg;
+  border-radius: 12px;
+  padding: 7px 14px 7px 14px;
+}
+.wf-add-btn-text {
+  font-family: $font-semibold;
+  font-size: 14px;
+  color: $pill-text;
+}
+
+// people card
+.wf-list-card {
+  padding: 4px 12px 12px 12px;
+  border-radius: 18px;
+  background-color: $surface;
+  border-width: 1px;
+  border-color: $border;
+  rn-box-shadow: $row-glow;
+}
+.wf-person {
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 4px 10px 4px;
+}
+.wf-person-body {
+  flex: 1;
+}
+.wf-person-name {
+  font-family: $font-bold;
+  font-size: 16px;
+  color: $text;
+}
+.wf-person-desc {
+  font-family: $font-regular;
+  font-size: 14px;
+  color: $muted;
+}
+.wf-amt-pill {
+  background-color: $pill-bg;
+  border-radius: 10px;
+  padding: 3px 10px 3px 10px;
+  margin-left: 10px;
+}
+.wf-amt-pill-text {
+  font-family: $font-bold;
+  font-size: 16px;
+  color: $pill-text;
+}
+.wf-people-total {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $selected-bg;
+  border-radius: 12px;
+  padding: 10px 14px 10px 14px;
+  margin-top: 6px;
+}
+.wf-people-total-label {
+  font-family: $font-regular;
+  font-size: 15px;
+  color: $muted;
+}
+.wf-people-total-value {
+  font-family: $font-bold;
+  font-size: 18px;
+  color: $hero-amount;
+}
+.wf-empty {
+  font-family: $font-regular;
+  font-size: 14px;
+  color: $muted;
+  text-align: center;
+  padding: 16px 0px 8px 0px;
+}
+
+// extras
+.wf-extra-card {
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 18px;
+  background-color: $surface;
+  border-width: 1px;
+  border-color: $border;
+  rn-box-shadow: $row-glow;
+}
+.wf-extra-row {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.wf-extra-name {
+  flex: 1;
+}
+.wf-extra-amount {
+  width: 96px;
+}
+.wf-remove {
+  padding: 4px;
+}
+.wf-extra-summary {
+  font-family: $font-regular;
+  font-size: 13px;
+  color: $muted;
+  margin-top: 8px;
+}
+
+// total
+.wf-total {
+  flex-direction: row;
+  align-items: center;
+  padding: 12px;
+  margin-top: 6px;
+  border-radius: 18px;
+  background-color: $surface;
+  border-width: 1px;
+  border-color: $border;
+  rn-box-shadow: $row-glow;
+}
+.wf-total-body {
+  flex: 1;
+  margin-left: 12px;
+}
+.wf-total-title {
+  font-family: $font-bold;
+  font-size: 17px;
+  color: $text;
+}
+.wf-total-sub {
+  font-family: $font-regular;
+  font-size: 13px;
+  color: $muted;
+}
+.wf-total-pill {
+  background-color: $pill-bg;
+  border-radius: 12px;
+  padding: 5px 12px 5px 12px;
+}
+.wf-total-pill-text {
+  font-family: $font-bold;
+  font-size: 20px;
+  color: $pill-text;
+}
+
+// notes
+.wf-notes-head {
+  flex-direction: row;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 8px;
+}
+.wf-notes-title {
+  font-family: $font-bold;
+  font-size: 16px;
+  color: $text;
+  margin-left: 10px;
+}
+
+.pal-danger {
+  color: $danger;
+}
+.pal-section-icon {
+  color: $primary;
+}

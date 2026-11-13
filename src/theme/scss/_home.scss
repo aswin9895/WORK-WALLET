@@ -1,0 +1,356 @@
+// Home screen (redesign v1, from the owner's light + dark mockups).
+// Classes prefixed `home-`. Colours/glows only via tokens.
+// Text uses <FixedText> (ignores phone font scale — owner's decision).
+@use 'tokens' as *;
+
+.home-screen {
+  flex: 1;
+  background-color: $bg;
+}
+.home-list {
+  padding-top: 4px;
+  padding-bottom: 150px;
+}
+
+// ---- app bar ----
+.home-appbar {
+  overflow: hidden;
+}
+.home-appbar-row {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px 12px 18px;
+}
+.home-brand {
+  flex-direction: row;
+  align-items: center;
+}
+.home-title {
+  font-family: $font-bold;
+  font-size: 24px;
+  color: $appbar-text;
+  margin-left: 12px;
+}
+// app logo (image, 263×192 → keep that shape) left of the title
+.home-logo {
+  width: 52px;
+  height: 38px;
+}
+.home-title-logo {
+  margin-left: 8px;
+}
+// Settings: round gear button (no text — owner's choice)
+.home-settings {
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  border-width: 1.5px;
+  border-color: $appbar-pill-border;
+  background-color: $appbar-pill-bg;
+  border-radius: 21px;
+}
+.home-appbar-wave {
+  height: 26px;
+  margin-top: -1px;
+  margin-bottom: 4px;
+}
+
+// ---- hero card ----
+.home-hero-shadow {
+  margin: 0px 16px 16px 16px;
+  border-radius: $radius-lg;
+  rn-box-shadow: $hero-glow;
+}
+.home-hero {
+  border-radius: $radius-lg;
+  border-width: 1px;
+  border-color: $hero-border;
+  overflow: hidden;
+}
+.home-hero-body {
+  flex-direction: row;
+  padding: 18px 16px 18px 16px;
+}
+.home-hero-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  background-color: $hero-icon-bg;
+  align-items: center;
+  justify-content: center;
+}
+.home-hero-text {
+  flex: 1;
+  margin-left: 14px;
+}
+.home-hero-label {
+  font-family: $font-regular;
+  font-size: 15px;
+  color: $hero-label;
+}
+.home-hero-amount {
+  font-family: $font-bold;
+  font-size: 32px;
+  line-height: 42px;
+  color: $hero-amount;
+  margin-bottom: 8px;
+}
+.home-hero-art {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  height: 120px;
+}
+
+.home-hero-heading {
+  flex-direction: row;
+  align-items: center;
+}
+.home-hero-filter-button {
+  width: 40px;
+  height: 40px;
+  margin-left: 8px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  background-color: $hero-icon-bg;
+}
+.home-hero-note {
+  font-family: $font-regular;
+  font-size: 12px;
+  color: $hero-label;
+}
+.home-hero-dates {
+  flex-direction: row;
+  gap: 10px;
+}
+
+// ---- pills ----
+.home-pill {
+  flex-direction: row;
+  align-items: center;
+  align-self: flex-start;
+  background-color: $pill-bg;
+  border-radius: 18px;
+  padding: 6px 14px 6px 11px;
+}
+.home-pill-small {
+  padding: 3px 11px 3px 9px;
+  margin-top: 5px;
+}
+.home-pill-text {
+  font-family: $font-semibold;
+  font-size: 14px;
+  color: $pill-text;
+  margin-left: 7px;
+}
+.home-pill-text-small {
+  font-size: 12px;
+  margin-left: 5px;
+}
+
+// ---- catering card ----
+.home-card {
+  flex-direction: row;
+  align-items: center;
+  margin: 0px 16px 12px 16px;
+  padding: 14px 12px 14px 14px;
+  border-radius: 18px;
+  background-color: $surface;
+  border-width: 1px;
+  border-color: $border;
+  rn-box-shadow: $card-glow;
+}
+.home-card-pressed {
+  background-color: $surface-alt;
+}
+.home-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 23px;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+}
+.home-avatar-ok {
+  background-color: $status-ok-bg;
+}
+.home-avatar-pending {
+  background-color: $status-pending-bg;
+}
+.home-avatar-empty {
+  background-color: $status-empty-bg;
+}
+.home-card-body {
+  flex: 1;
+  margin-left: 14px;
+}
+.home-card-name {
+  font-family: $font-semibold;
+  font-size: 17px;
+  color: $text;
+}
+.home-card-meta {
+  font-family: $font-regular;
+  font-size: 13px;
+  color: $muted;
+}
+.home-card-divider {
+  width: 1px;
+  height: 44px;
+  background-color: $divider;
+  margin: 0px 12px 0px 8px;
+}
+.home-card-amount {
+  font-family: $font-bold;
+  font-size: 17px;
+  color: $text;
+  margin-right: 4px;
+}
+
+// ---- empty hint ----
+.home-hint {
+  align-items: center;
+  padding: 40px 24px 24px 24px;
+}
+.home-hint-text {
+  font-family: $font-medium;
+  font-size: 16px;
+  line-height: 24px;
+  color: $hint-text;
+  text-align: center;
+  margin-top: 16px;
+  max-width: 230px; // wraps onto two lines like the design
+}
+
+// ---- bottom: wave + main button ----
+.home-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.home-bottom-wave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 170px;
+}
+.home-cta-wrap-tabs {
+  // space above the bottom tabs; also room for the button's glow, which
+  // would otherwise be cut flat at the bottom of the screen area
+  padding-bottom: 30px;
+}
+.home-cta-wrap {
+  padding: 0px 16px 0px 16px;
+}
+.home-cta-shadow {
+  align-self: center; // only as wide as "+ New", centred
+  border-radius: 26px;
+  rn-box-shadow: $cta-glow;
+}
+.home-cta {
+  height: 52px;
+  min-width: 150px;
+  padding: 0px 34px 0px 34px;
+  border-radius: 26px;
+  overflow: hidden;
+}
+.home-cta-inner {
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.home-cta-text {
+  font-family: $font-bold;
+  font-size: 18px;
+  color: $on-primary;
+  margin-left: 8px;
+}
+
+// ---- helpers ----
+.fill-absolute {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+// ---- palette: colours for SVG drawings / icons (read `.color`) ----
+.pal-appbar-from {
+  color: $appbar-from;
+}
+.pal-appbar-to {
+  color: $appbar-to;
+}
+.pal-appbar-text {
+  color: $appbar-text;
+}
+.pal-appbar-wave {
+  color: $appbar-wave;
+}
+.pal-appbar-icon {
+  color: $appbar-icon-bg;
+}
+.pal-hero-from {
+  color: $hero-from;
+}
+.pal-hero-to {
+  color: $hero-to;
+}
+.pal-hero-icon {
+  color: $hero-icon;
+}
+.pal-hero-art {
+  color: $hero-illustration;
+}
+.pal-hero-art-shine {
+  color: $hero-illustration-shine;
+}
+.pal-hero-hill {
+  color: $hero-hill;
+}
+.pal-pill-text {
+  color: $pill-text;
+}
+.pal-status-ok {
+  color: $status-ok;
+}
+.pal-status-pending {
+  color: $status-pending;
+}
+.pal-status-empty {
+  color: $status-empty;
+}
+.pal-muted {
+  color: $muted;
+}
+.pal-hint-art {
+  color: $hint-illustration;
+}
+.pal-bottom-wave {
+  color: $bottom-wave;
+}
+.pal-bg {
+  color: $bg;
+}
+.pal-cta-from {
+  color: $cta-from;
+}
+.pal-cta-to {
+  color: $cta-to;
+}
+.pal-on-primary {
+  color: $on-primary;
+}
+
+.home-hero-cloche {
+  position: absolute;
+  right: 18px;
+  bottom: 12px;
+}
