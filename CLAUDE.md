@@ -4,7 +4,7 @@ Guidance for Claude (and any developer) working in this repo.
 
 ## What this is
 
-**Work & Wallet** (renamed from "Work Tracker"; package `com.workandwallet.app`,
+**Work & Wallet** (renamed from "Work Tracker"; package `com.fresherfindings.workandwallet`,
 JS component `WorkAndWallet`, database file `workandwallet.sqlite`) — an
 offline Android app (React Native CLI, **not Expo**) for
 recording catering work, and (Money tab) the owner's bank money. The owner supplies workers to catering companies and
@@ -15,10 +15,62 @@ been paid, and produces a "Work Payment Report" (the bill to that catering).
 - User + technical docs: [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md)
 - Planned-for-later work: [docs/PENDING.md](docs/PENDING.md). Keep it
   updated: tick or move items when done, add new "later" requests.
-- **Release status: NOT released yet** (no real users). The package name
-  `com.workandwallet.app` is final once published — never change it then. At the first
-  production release, follow the reminder at the top of PENDING.md and add
-  the "no data loss" production rules here.
+- **Release status: PRODUCTION** (first release: versionCode 1 / versionName
+  1.0, database v7). Real data now lives on the owner's phone — follow
+  **"Production rules (no data loss)"** below for EVERY change.
+- Package name `com.fresherfindings.workandwallet` — final, never change it. (`com.workandwallet.app`
+  was taken on the Play Store, so it changed once before publishing.)
+- Git: github.com/aswin9895/WORK-WALLET. The release key and
+  `android/keystore.properties` are git-ignored — never commit them.
+- **Privacy policy** (Play Store): `docs/privacy-policy.html` (one page,
+  hosted on GitHub Pages by the owner). Says: offline, data only on the
+  phone, no accounts / ads / analytics, files leave only when the owner
+  saves or shares. **Update it (and its effective date) before releasing
+  anything that changes data handling** — e.g. backend sync, new
+  permissions, analytics.
+- **Play Store impact — tell the owner AT THE TIME OF THE CHANGE.** Whenever
+  a code change would need something updated in Play Console or the store
+  listing when released, say so in the same reply that makes the change
+  (and add it to PENDING.md under "Every new release"), naming exactly what
+  to update. Current declarations (all "No / none"), which must stay true:
+  - **Data safety:** no data collected or shared; all data stays on the
+    phone.
+  - **Content rating (IARC):** All Other App Types; no user content sharing,
+    online content, age-restricted products, location, digital purchases
+    or web access → Everyone / 3+.
+  - **Ads:** no ads. **Target audience:** adults (not for under-13s).
+  - **Permissions:** storage only for saving on Android ≤ 9; internet /
+    network declared by libraries but unused.
+  Changes that need a Play update include: any network / sync / login,
+  analytics or crash reporting, ads, in-app purchases, new permissions
+  (camera, location, contacts, notifications …), sharing between users,
+  new third-party SDKs, a different target age, a new app name / icon /
+  screenshots (store listing), or a changed privacy policy.
+- **NO git actions without the owner's explicit permission** — no commit,
+  push, pull, fetch, merge, branch, reset, stash, tag or any other command
+  that changes the repo or the remote. Read-only checks (`git status`,
+  `git log`, `git diff`) are fine. Ask first, every time.
+
+## Production rules (no data loss) — from the first release on
+
+- **Migrations v1–v7 shipped in the first release and are FROZEN.** Never
+  edit, reorder or remove them. Every schema change is a NEW migration
+  appended to `MIGRATIONS` (v8, v9 …).
+- Never drop or rename a column / table that holds user data without
+  copying the data first (rebuild pattern, see v2). Never delete or reset
+  user data in a migration — always convert it.
+- Every new migration gets a test in `__tests__/db.test.js` that runs it on
+  data from the previous version (the upgrade test) before release.
+- A migration that renames / moves columns must also convert old backup
+  files in `parseBackup` (+ a test in `__tests__/backup.test.js`).
+- Money amounts stay INTEGER PAISE; never change the meaning of existing
+  columns.
+- Every APK given to the phone: same signing key (`worktracker-release.keystore`,
+  never regenerate), and raise `versionCode` (+ `versionName`) in
+  `android/app/build.gradle`. Android refuses an update with a lower or
+  equal versionCode or another key; uninstalling deletes the data.
+- Before risky updates, remind the owner to make a backup (Settings → Back
+  up data).
 - Theming guide: [src/theme/README.md](src/theme/README.md)
 
 ## Hard rules (owner's decisions — do not change without asking)

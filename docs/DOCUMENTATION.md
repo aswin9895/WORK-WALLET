@@ -1,6 +1,6 @@
 # Work & Wallet — Documentation
 
-*(Formerly "Work Tracker". Android package `com.workandwallet.app`.)*
+*(Formerly "Work Tracker". Android package `com.fresherfindings.workandwallet` — final. In production since version 1.0.)*
 
 An offline Android app for keeping catering work records and making the payment
 report you send to each catering company.

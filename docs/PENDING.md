@@ -5,41 +5,41 @@ one; details may have changed.
 
 ## Planned features
 
-- [ ] **Backend sync (build LAST, owner's choice):** data is sync-ready (uid,
+- [ ] **Backend sync (build LAST, owner's choice):** (update
+      `docs/privacy-policy.html` before releasing it) data is sync-ready (uid,
       updated_at, sync_deletions, device_id). Still to build: the server,
       login, upload/download using `getChangesSince`, and translating local
       ids ↔ uids.
 
-## ⚠️ At the first production release (REMINDER)
+## Every new release (production)
 
-- [ ] **Switch CLAUDE.md to "production mode".** Right now there are no real
-      users, so data/schema changes can be made freely (e.g. editing the
-      not-yet-released migrations, deleting test data like v4 did). From the
-      first release onwards real users will have data on their phones, so add
-      a section to CLAUDE.md saying:
-      - every schema change is a NEW migration; never edit or reorder a
-        shipped one, never drop/rename a column or table that holds user data
-        without copying it first;
-      - never delete or reset user data in a migration (no more "test data,
-        delete it" decisions) — always migrate it;
-      - every migration must be tested on a copy of the previous version's
-        data (`__tests__/db.test.js` upgrade test) before release;
-      - keep the same signing keystore (see below) and bump the app version.
-      Also note in CLAUDE.md which migration number shipped in the first
-      release (everything up to it is frozen).
+- [ ] For each new APK: raise `versionCode` (+ `versionName`) in
+      `android/app/build.gradle`, build with `npm run build:apk` (same
+      signing key), and follow "Production rules (no data loss)" in
+      CLAUDE.md.
+- [ ] Before each release: update any Play Console parts listed here by the
+      changes in it (Data safety, content rating, permissions, privacy policy,
+      store listing). None needed so far.
 
 ## Open setup tasks
 
-- [ ] **Move to the renamed app:** the app is now **Work & Wallet**
-      (package `com.workandwallet.app`) and installs next to the old Work
-      Tracker. Back up in the old app, restore in the new one, then
-      uninstall the old app.
-
-- [ ] **Version control:** the project is not a git repository yet (the
-      owner sets it up). `android/keystore.properties` and the release
-      keystore are git-ignored — keep them out of the repo.
+- [ ] **Move to the final app:** the package is now
+      `com.fresherfindings.workandwallet` (`com.workandwallet.app` was taken on the Play Store), so
+      it installs as a NEW app next to the old ones (Work Tracker
+      `com.worktracker`, Work & Wallet `com.workandwallet.app`). Back up in
+      the app that has your data, restore in the new one, then uninstall the
+      old apps.
 
 ## Done (moved out of this list)
+
+- Privacy policy page `docs/privacy-policy.html` for the Play Store
+  (developer Aswin Saseendran, contact Gmail). Owner hosts it on GitHub Pages.
+
+- **Production:** CLAUDE.md switched to production mode — migrations v1–v7
+  frozen, no-data-loss rules, same key + higher versionCode for every APK.
+  Package name `com.fresherfindings.workandwallet` is final.
+- Version control: git repo github.com/aswin9895/WORK-WALLET (first commit
+  done; signing key and its passwords stay git-ignored).
 
 - Settings in the top bar is a round gear button only; the Money tab's top
   bar shows "Work & Wallet" + logo; reports (PDF + image) have a dark header
@@ -48,7 +48,8 @@ one; details may have changed.
 - App icon (launcher, adaptive) and the in-app logo in the Work tab's top
   bar, from the owner's Icon.png / InApp.png (originals in assets/branding).
 
-- Renamed to **Work & Wallet**: app name, package `com.workandwallet.app`,
+- Renamed to **Work & Wallet**: app name, package `com.fresherfindings.workandwallet` (first tried
+  `com.workandwallet.app` — taken on the Play Store),
   file / folder names (Downloads/WorkAndWallet, WorkAndWallet-backup-…json),
   PDF / image footer. Old "WorkTracker" backups still restore. The signing
   key file keeps its name.

@@ -1,4 +1,4 @@
-package com.workandwallet.app
+package com.fresherfindings.workandwallet
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

@@ -4,7 +4,7 @@ Guidance for Codex (and any developer) working in this repo.
 
 ## What this is
 
-**Work & Wallet** (formerly Work Tracker; package `com.workandwallet.app`;
+**Work & Wallet** (formerly Work Tracker; package `com.fresherfindings.workandwallet`;
 see CLAUDE.md, which is the up-to-date guide) — an offline Android app
 (React Native CLI, **not Expo**) for
 recording catering work. The owner supplies workers to catering companies and
