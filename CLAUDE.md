@@ -419,6 +419,15 @@ masters (removed in v2): amounts and extra names are typed per entry.
   (opened from the card's filter icon). Data: `getEarningsData()`.
 
 ### Money tracking (v7) — `src/domain/money.js`, Money tab
+
+- Top dashboard `moneyDashboard.spent` = scoped expense + savings + lendOpen.
+  Loan repayments reduce the originating period; withdrawals do not reduce
+  Spent. Account cards retain expense-only “Spent this month”.
+
+- Money home top card uses `moneyDashboard` for All / account selection via a filter icon beside the month,
+  default salary account (fallback All). Salary headline remains salary
+  remaining; others show current balance. Every row scopes to the selection
+  in the existing salary period. Card body opens that account's month.
 Owner's decisions (from their bank notes): HDFC = salary account, SBI =
 normal account; starts fresh next year.
 - **Amounts are INTEGER PAISE** in every money table and in domain/money

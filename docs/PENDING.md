@@ -32,6 +32,13 @@ one; details may have changed.
 
 ## Done (moved out of this list)
 
+- Top Money card Spent includes expenses, savings and unpaid loans from the
+  selected salary period; repayments reduce their original loan period.
+  Savings withdrawals and repayments of older loans do not reduce it.
+
+- Money home top card: account filter beside the month, salary account by default;
+  scoped period totals and account balances, with matching month navigation.
+
 - Privacy policy page `docs/privacy-policy.html` for the Play Store
   (developer Aswin Saseendran, contact Gmail). Owner hosts it on GitHub Pages.
 

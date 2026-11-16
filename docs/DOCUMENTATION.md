@@ -259,10 +259,22 @@ balance before this salary**. The app shows what your entries add up to;
 the difference is saved as **Missing** (bank has less — an entry was
 forgotten) or **Extra** (bank has more). The new month starts.
 
-**Money home** shows this month: **salary remaining** (salary + income −
+**Money home** has an filter button beside the month in its top card (All / each account), defaulting to
+the salary account. All figures in that card follow the selected account.
+Other accounts show **Balance now**; All shows the combined current balance.
+Income, Spent, Saved, Given and Repaid use the current salary period, not the
+calendar month. Tap the card body to open that selection's month details.
+The salary account shows **salary remaining** (salary + income −
 expenses − savings − money given that hasn't come back; red when you spent
 older money), Spent, Saved, Given and Repaid, the fixed items not added yet
 (**Add** / **Add all**), each account's balance, Will get back and Savings.
+
+**Spent in the top Money card** includes expenses + savings/investments +
+the outstanding portion of loans given during that salary period. Repayments
+reduce the original loan's period, even when received later. Repayments of
+older loans and savings withdrawals do not reduce this period's Spent.
+Saved and Given remain breakdowns, not additional amounts to add to Spent.
+The account cards' “Spent this month” remains expenses only.
 
 **Will get back:** money given lowers the month it was given in. When the
 person repays (part or all, back into the same account), tap **Repaid** in

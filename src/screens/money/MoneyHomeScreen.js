@@ -6,7 +6,7 @@
  */
 import React, { useState } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
-import { Plus, Wallet } from 'lucide-react-native';
+import { ListFilter, Plus, Wallet } from 'lucide-react-native';
 import {
   mdiAccountArrowRight,
   mdiBank,
@@ -22,8 +22,8 @@ import MdiIcon from '@/components/graphics/MdiIcon';
 import HomeAppBar from '@/screens/caterings/home/HomeAppBar';
 import { ROUTES } from '@/navigation/routes';
 import { addFixedItems } from '@/data';
-import { showError } from '@/components/alert';
-import { ENTRY_TYPES, inPeriod, moneyP } from '@/domain/money';
+import { showAlert, showError } from '@/components/alert';
+import { ENTRY_TYPES, inPeriod, moneyP, moneyDashboard } from '@/domain/money';
 import { todayIso } from '@/utils/format';
 import useMoneyData from './useMoneyData';
 import EntrySheet from './EntrySheet';
@@ -45,7 +45,7 @@ function Card({ children, onPress }) {
   );
 }
 
-function CardHead({ iconPath, title, sub, action, onAction }) {
+function CardHead({ iconPath, title, sub, action, onAction, filter }) {
   const s = useStyles();
   return (
     <View style={s.moneyCardHead}>
@@ -56,6 +56,17 @@ function CardHead({ iconPath, title, sub, action, onAction }) {
         <FixedText style={s.moneyCardTitle}>{title}</FixedText>
         {sub ? <FixedText style={s.moneyCardSub}>{sub}</FixedText> : null}
       </View>
+      {filter ? (
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Filter by account"
+          onPress={filter}
+          hitSlop={8}
+          style={({ pressed }) => [s.moneyIconBtn, pressed && s.btnPressed]}
+        >
+          <ListFilter size={18} strokeWidth={2.2} color={s.palTileIcon.color} />
+        </Pressable>
+      ) : null}
       {action ? (
         <Pressable onPress={onAction} hitSlop={8}>
           <FixedText style={s.moneyLink}>{action}</FixedText>
@@ -71,6 +82,7 @@ export default function MoneyHomeScreen({ navigation }) {
   const [entry, setEntry] = useState(null);
   const [salaryOpen, setSalaryOpen] = useState(false);
   const [adding, setAdding] = useState(false);
+  const [accountFilter, setAccountFilter] = useState(null);
 
   const addFixed = async items => {
     if (adding || !items.length) {
@@ -136,7 +148,6 @@ export default function MoneyHomeScreen({ navigation }) {
   const {
     current,
     summaries,
-    salarySummary,
     salaryAccount,
     balances,
     owed,
@@ -144,11 +155,17 @@ export default function MoneyHomeScreen({ navigation }) {
     savings,
     fixedDue,
   } = derived;
-  const spent = summaries.reduce((t, x) => t + x.totals.expense, 0);
-  const saved = summaries.reduce((t, x) => t + x.totals.savings, 0);
-  const income = summaries.reduce((t, x) => t + x.totals.income, 0);
-  const given = summaries.reduce((t, x) => t + x.totals.lend, 0);
-  const repaid = summaries.reduce((t, x) => t + x.totals.repayment, 0);
+  const dashboard = moneyDashboard(derived, accountFilter);
+  const {
+    savings: saved,
+    income,
+    lend: given,
+    repayment: repaid,
+    salary,
+  } = dashboard.totals;
+  const headline = dashboard.isSalary
+    ? dashboard.salaryRemaining
+    : dashboard.balance;
   const accountName = id => derived.accounts.find(a => a.id === id)?.name;
 
   return (
@@ -156,53 +173,82 @@ export default function MoneyHomeScreen({ navigation }) {
       {header}
       <ScrollView contentContainerStyle={s.moneyContent}>
         {/* this salary month */}
-        <Card
-          onPress={() =>
-            navigation.navigate(ROUTES.MONEY_MONTH, { key: current.key })
-          }
-        >
+        <Card>
           <CardHead
             iconPath={mdiCalendarMonth}
             title={current.label}
-            sub={periodDates(current)}
+            sub={`${periodDates(current)} · ${
+              dashboard.value === 'all'
+                ? 'All accounts'
+                : accountName(dashboard.accountId)
+            }`}
+            filter={async () => {
+              const { value } = await showAlert({
+                layout: 'header',
+                title: 'Show account',
+                options: [
+                  { value: 'all', label: 'All' },
+                  ...derived.accounts.map(a => ({
+                    value: String(a.id),
+                    label: a.name,
+                  })),
+                ],
+                selected: [dashboard.value],
+                closeOnSelect: true,
+                buttons: [{ text: 'Cancel', value: null, style: 'cancel' }],
+              });
+              if (value) {
+                setAccountFilter(value);
+              }
+            }}
           />
-          {salarySummary && current.salary ? (
-            <>
-              <FixedText style={s.moneyBigLabel}>
-                Salary remaining this month
+          <Pressable
+            onPress={() =>
+              navigation.navigate(ROUTES.MONEY_MONTH, {
+                key: current.key,
+                accountId: dashboard.accountId,
+              })
+            }
+          >
+            {!dashboard.isSalary || current.salary ? (
+              <>
+                <FixedText style={s.moneyBigLabel}>
+                  {dashboard.isSalary
+                    ? 'Salary remaining this month'
+                    : dashboard.value === 'all'
+                    ? 'Combined balance now'
+                    : 'Balance now'}
+                </FixedText>
+                <FixedText style={[s.moneyBig, headline < 0 && s.moneyMinus]}>
+                  {moneyP(headline)}
+                </FixedText>
+              </>
+            ) : (
+              <FixedText style={s.moneyNote}>
+                {salaryAccount
+                  ? 'Tap "Got salary" when your salary comes. Your month starts from that day.'
+                  : 'Mark one account as the salary account in Settings → Money.'}
               </FixedText>
-              <FixedText
-                style={[
-                  s.moneyBig,
-                  salarySummary.salaryRemaining < 0 && s.moneyMinus,
-                ]}
-              >
-                {moneyP(salarySummary.salaryRemaining)}
-              </FixedText>
-            </>
-          ) : (
-            <FixedText style={s.moneyNote}>
-              {salaryAccount
-                ? 'Tap "Got salary" when your salary comes. Your month starts from that day.'
-                : 'Mark one account as the salary account in Settings → Money.'}
-            </FixedText>
-          )}
-          <View style={s.moneyRows}>
-            {current.salary ? (
-              <Row label="Salary" value={moneyP(current.salary.amount)} />
-            ) : null}
-            {income ? (
-              <Row label="Income" value={`+${moneyP(income)}`} tone="plus" />
-            ) : null}
-            <Row label="Spent" value={moneyP(spent)} />
-            {saved ? <Row label="Saved" value={moneyP(saved)} /> : null}
-            {given ? (
-              <Row label="Given (will get back)" value={moneyP(given)} />
-            ) : null}
-            {repaid ? (
-              <Row label="Repaid to you" value={`+${moneyP(repaid)}`} tone="plus" />
-            ) : null}
-          </View>
+            )}
+            <View style={s.moneyRows}>
+              {salary ? <Row label="Salary" value={moneyP(salary)} /> : null}
+              {income ? (
+                <Row label="Income" value={`+${moneyP(income)}`} tone="plus" />
+              ) : null}
+              <Row label="Spent" value={moneyP(dashboard.spent)} />
+              {saved ? <Row label="Saved" value={moneyP(saved)} /> : null}
+              {given ? (
+                <Row label="Given (will get back)" value={moneyP(given)} />
+              ) : null}
+              {repaid ? (
+                <Row
+                  label="Repaid to you"
+                  value={`+${moneyP(repaid)}`}
+                  tone="plus"
+                />
+              ) : null}
+            </View>
+          </Pressable>
         </Card>
 
         {/* fixed monthly items not added yet */}
@@ -223,7 +269,9 @@ export default function MoneyHomeScreen({ navigation }) {
                       accountName(f.account_id) || ''
                     }`}
                   </FixedText>
-                  <FixedText style={s.moneyRowValue}>{moneyP(f.amount)}</FixedText>
+                  <FixedText style={s.moneyRowValue}>
+                    {moneyP(f.amount)}
+                  </FixedText>
                   <Pressable onPress={() => addFixed([f])} hitSlop={8}>
                     <FixedText style={s.moneyEntryAction}>Add</FixedText>
                   </Pressable>
@@ -298,7 +346,11 @@ export default function MoneyHomeScreen({ navigation }) {
               />
               <View style={s.moneyRows}>
                 {savings.map(x => (
-                  <Row key={x.type.id} label={x.type.name} value={moneyP(x.total)} />
+                  <Row
+                    key={x.type.id}
+                    label={x.type.name}
+                    value={moneyP(x.total)}
+                  />
                 ))}
               </View>
             </Card>

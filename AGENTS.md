@@ -4,6 +4,14 @@ Guidance for Codex (and any developer) working in this repo.
 
 ## What this is
 
+- Top Money dashboard Spent = expenses + savings + outstanding loans given
+  in its salary period, scoped by account. Repayments follow the loan period;
+  savings withdrawals are excluded. Account-card spending stays expense-only.
+
+- Money home top dashboard has an account filter beside the month, default salary account;
+  `domain/money.moneyDashboard` scopes totals. Other accounts show current
+  balance, All combined balance; period rows retain salary-period dates.
+
 **Work & Wallet** (formerly Work Tracker; package `com.fresherfindings.workandwallet`;
 see CLAUDE.md, which is the up-to-date guide) — an offline Android app
 (React Native CLI, **not Expo**) for

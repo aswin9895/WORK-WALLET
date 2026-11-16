@@ -247,8 +247,7 @@ export function balanceBefore(
 export const accountBalance = (account, entries, checks) =>
   balanceBefore(account, entries, checks, null);
 
-const ZERO_TOTALS = () =>
-  Object.fromEntries(ENTRY_TYPE_KEYS.map(k => [k, 0]));
+const ZERO_TOTALS = () => Object.fromEntries(ENTRY_TYPE_KEYS.map(k => [k, 0]));
 
 /**
  * One account in one salary month — like a block of the owner's
@@ -499,7 +498,11 @@ export function entryError(e) {
   if (e.type === 'repayment' && !e.lend_id) {
     return 'Choose what was repaid.';
   }
-  if (e.type === 'salary' && e.for_month && !/^\d{4}-\d{2}$/.test(e.for_month)) {
+  if (
+    e.type === 'salary' &&
+    e.for_month &&
+    !/^\d{4}-\d{2}$/.test(e.for_month)
+  ) {
     return 'Choose the month this salary is for.';
   }
   return null;
@@ -510,9 +513,46 @@ export function entryError(e) {
 /* ---------------------------------------------------------------------- */
 
 /**
- * data = getMoneyData() result; today = 'YYYY-MM-DD'.
- * current = the salary month containing today.
+ * Scope the home card to one account or All, falling back to the salary
+ * account when the selection is missing or has been deleted.
  */
+export function moneyDashboard(derived, selection) {
+  const account = derived.accounts.find(a => String(a.id) === selection);
+  const value =
+    selection === 'all' || account
+      ? selection
+      : derived.salaryAccount
+      ? String(derived.salaryAccount.id)
+      : 'all';
+  const summaries = derived.summaries.filter(
+    x => value === 'all' || String(x.account.id) === value,
+  );
+  const totals = ZERO_TOTALS();
+  summaries.forEach(x => {
+    Object.keys(totals).forEach(key => {
+      totals[key] += x.totals[key];
+    });
+  });
+  const selected = value === 'all' ? null : summaries[0];
+  return {
+    value,
+    accountId: selected?.account.id,
+    isSalary: !!selected?.account.is_salary,
+    salaryRemaining: selected?.salaryRemaining,
+    // Repayments follow the loan's period, never the repayment's period.
+    spent:
+      totals.expense +
+      totals.savings +
+      summaries.reduce((total, x) => total + x.lendOpen, 0),
+    balance: summaries.reduce(
+      (total, x) => total + derived.balances[x.account.id],
+      0,
+    ),
+    totals,
+  };
+}
+
+/** data = getMoneyData() result; current = the salary month containing today. */
 export function deriveMoney(data, today) {
   const accounts = sortAccounts(data.accounts);
   const periods = buildPeriods(data.entries);

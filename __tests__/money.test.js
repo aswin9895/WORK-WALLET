@@ -3,6 +3,8 @@
  * notes: HDFC (salary account) + SBI.
  */
 import {
+  deriveMoney,
+  moneyDashboard,
   balanceBefore,
   buildPeriods,
   checkDifference,
@@ -84,6 +86,77 @@ function november() {
   return { entries, salary, sruthi, amma };
 }
 
+describe('Money home account selection', () => {
+  const data = (accounts = [HDFC, SBI]) => ({
+    accounts,
+    entries: november().entries,
+    checks: [],
+    savingsTypes: [],
+    fixedItems: [],
+  });
+
+  test('defaults to salary; switching isolates every period total and balance', () => {
+    const derived = deriveMoney(data(), '2026-11-16');
+    const salary = moneyDashboard(derived, null);
+    expect(salary.accountId).toBe(HDFC.id);
+    expect(salary.isSalary).toBe(true);
+    expect(salary.totals.income).toBe(0);
+    expect(salary.salaryRemaining).toBe(derived.salarySummary.salaryRemaining);
+    const other = moneyDashboard(derived, '2');
+    expect(other.isSalary).toBe(false);
+    expect(other.totals.salary).toBe(0);
+    expect(other.totals.expense).toBe(P(826.75));
+    expect(other.totals.income).toBe(P(7286.44));
+    expect(other.balance).toBe(P(193.04));
+    const all = moneyDashboard(derived, 'all');
+    expect(all.accountId).toBeUndefined();
+    for (const key of Object.keys(all.totals)) {
+      expect(all.totals[key]).toBe(salary.totals[key] + other.totals[key]);
+    }
+    expect(all.balance).toBe(salary.balance + other.balance);
+  });
+
+  test('removed selection falls back safely; no salary account defaults to All', () => {
+    const derived = deriveMoney(data(), '2026-11-16');
+    expect(moneyDashboard(derived, 'deleted').value).toBe('1');
+    expect(
+      moneyDashboard(deriveMoney(data([SBI]), '2026-11-16'), null).value,
+    ).toBe('all');
+    const empty = deriveMoney({ ...data([]), entries: [] }, '2026-11-16');
+    expect(moneyDashboard(empty, null).balance).toBe(0);
+  });
+
+  test('Spent includes savings and outstanding loans from this period only', () => {
+    const input = data();
+    const oldLoan = e(HDFC, 'lend', 500, '2026-10-20');
+    const loan = e(HDFC, 'lend', 1000, '2026-11-03');
+    input.entries = [
+      e(HDFC, 'salary', 10000, '2026-11-01'),
+      oldLoan,
+      loan,
+      e(HDFC, 'expense', 200, '2026-11-04'),
+      e(HDFC, 'savings', 300, '2026-11-04'),
+      e(HDFC, 'withdrawal', 100, '2026-11-05'),
+      e(HDFC, 'repayment', 500, '2026-11-05', { lend_id: oldLoan.id }),
+      e(HDFC, 'repayment', 400, '2026-11-06', { lend_id: loan.id }),
+      e(SBI, 'expense', 50, '2026-11-04'),
+      e(SBI, 'savings', 60, '2026-11-04'),
+    ];
+    let derived = deriveMoney(input, '2026-11-16');
+    expect(moneyDashboard(derived, '1').spent).toBe(P(1100));
+    expect(moneyDashboard(derived, '2').spent).toBe(P(110));
+    expect(moneyDashboard(derived, 'all').spent).toBe(P(1210));
+    // A later repayment still settles the original period's loan.
+    input.entries.push(
+      e(HDFC, 'salary', 10000, '2026-12-01'),
+      e(HDFC, 'repayment', 600, '2026-12-02', { lend_id: loan.id }),
+    );
+    derived = deriveMoney(input, '2026-11-16');
+    expect(moneyDashboard(derived, '1').spent).toBe(P(500));
+    expect(moneyDashboard(deriveMoney(input, '2026-12-03'), '1').spent).toBe(0);
+  });
+});
+
 describe('amounts', () => {
   test('paise in, rupees out', () => {
     expect(toPaise('1,108.33')).toBe(110833);
@@ -136,7 +209,7 @@ describe('salary months', () => {
   });
 });
 
-describe('November, like the owner\'s notes', () => {
+describe("November, like the owner's notes", () => {
   test('HDFC: initial 47,455.54; money given lowers salary remaining', () => {
     const { entries } = november();
     const [period] = buildPeriods(entries);
@@ -176,9 +249,9 @@ describe('November, like the owner\'s notes', () => {
     const { entries } = november();
     entries.push(e(HDFC, 'expense', 7000, '2026-11-20', { name: 'Phone' }));
     const [period] = buildPeriods(entries);
-    expect(periodAccountSummary(HDFC, period, entries, []).salaryRemaining).toBe(
-      P(-302.33 - 16273),
-    );
+    expect(
+      periodAccountSummary(HDFC, period, entries, []).salaryRemaining,
+    ).toBe(P(-302.33 - 16273));
   });
 
   test('closing with real balances: Missing / Extra, next month continues from real', () => {
@@ -188,7 +261,12 @@ describe('November, like the owner\'s notes', () => {
     // SBI bank shows 190.04 → 3 missing; HDFC matches
     expect(checkDifference(SBI, all, [], '2026-11-30', P(190.04))).toBe(P(-3));
     const checks = [
-      { id: 1, salary_id: dec.id, account_id: SBI.id, actual_balance: P(190.04) },
+      {
+        id: 1,
+        salary_id: dec.id,
+        account_id: SBI.id,
+        actual_balance: P(190.04),
+      },
       {
         id: 2,
         salary_id: dec.id,
@@ -233,9 +311,9 @@ describe('will get back', () => {
       ['Sruthi', P(6211), 0],
       ['amma', P(5000), P(5062)],
     ]);
-    expect(openLendsByPerson(entries).map(g => [g.name, g.remaining])).toEqual(
-      [['amma', P(5062)]],
-    );
+    expect(openLendsByPerson(entries).map(g => [g.name, g.remaining])).toEqual([
+      ['amma', P(5062)],
+    ]);
     expect(totalOwed(entries)).toBe(P(5062));
     // repaid money comes back into the month it was given in
     const [period] = buildPeriods(entries);
@@ -265,7 +343,9 @@ describe('will get back', () => {
     expect(decAfter.computedEnd - decBefore.computedEnd).toBe(P(10062));
     expect(decAfter.totals.repayment).toBe(P(10062));
     // SBI has no salary remaining at all
-    expect(periodAccountSummary(SBI, nov, entries, []).salaryRemaining).toBeNull();
+    expect(
+      periodAccountSummary(SBI, nov, entries, []).salaryRemaining,
+    ).toBeNull();
   });
 });
 
@@ -313,9 +393,7 @@ describe('savings, fixed items, suggestions, checks', () => {
     };
     const old = { ...bike, id: 3, name: 'Old loan', active: 0 };
     const [period] = buildPeriods(entries);
-    expect(fixedItemsDue([bike, sruthi, old], entries, period)).toHaveLength(
-      2,
-    );
+    expect(fixedItemsDue([bike, sruthi, old], entries, period)).toHaveLength(2);
     const added = { id: 99, ...entryFromFixedItem(sruthi, '2026-11-01') };
     expect(added).toMatchObject({
       type: 'lend',
@@ -324,9 +402,7 @@ describe('savings, fixed items, suggestions, checks', () => {
       fixed_item_id: 2,
     });
     expect(
-      fixedItemsDue([bike, sruthi], [...entries, added], period).map(
-        f => f.id,
-      ),
+      fixedItemsDue([bike, sruthi], [...entries, added], period).map(f => f.id),
     ).toEqual([1]);
   });
 
@@ -354,7 +430,6 @@ describe('savings, fixed items, suggestions, checks', () => {
 
 describe('deriveMoney (Money home)', () => {
   test('current month, balances, owed, savings, fixed items due', () => {
-    const { deriveMoney } = require('../src/domain/money');
     const { entries } = november();
     const d = deriveMoney(
       {
